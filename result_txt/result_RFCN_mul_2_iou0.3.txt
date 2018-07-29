@@ -1,0 +1,87 @@
+ countData:2595 leaders,7493 others 
+ Sum:9735 countDet:8741 no_label:868
+detection recall:0.965007930214
+threshold:0.6
+right:369,5472 falsePositive:2027 falseNegative:5
+match precision :0.741902705449
+leader match recall:0.142196531792
+true profile:0 false profile:0
+true frontal:369 false frontal:2027
+threshold:0.65
+right:454,5472 falsePositive:1942 falseNegative:5
+match precision :0.752699098184
+leader match recall:0.174951830443
+true profile:0 false profile:0
+true frontal:454 false frontal:1942
+threshold:0.7
+right:525,5470 falsePositive:1871 falseNegative:7
+match precision :0.761463228757
+leader match recall:0.202312138728
+true profile:0 false profile:0
+true frontal:525 false frontal:1871
+threshold:0.75
+right:618,5468 falsePositive:1778 falseNegative:9
+match precision :0.773021719802
+leader match recall:0.238150289017
+true profile:0 false profile:0
+true frontal:618 false frontal:1778
+threshold:0.8
+right:727,5465 falsePositive:1669 falseNegative:12
+match precision :0.786485456624
+leader match recall:0.280154142582
+true profile:0 false profile:0
+true frontal:727 false frontal:1669
+threshold:0.85
+right:843,5462 falsePositive:1553 falseNegative:15
+match precision :0.800838308142
+leader match recall:0.324855491329
+true profile:0 false profile:0
+true frontal:843 false frontal:1553
+threshold:0.9
+right:949,5450 falsePositive:1447 falseNegative:27
+match precision :0.812777848342
+leader match recall:0.36570327553
+true profile:0 false profile:0
+true frontal:949 false frontal:1447
+threshold:0.95
+right:1077,5431 falsePositive:1319 falseNegative:46
+match precision :0.82662263432
+leader match recall:0.415028901734
+true profile:0 false profile:0
+true frontal:1077 false frontal:1319
+threshold:1.0
+right:1206,5402 falsePositive:1190 falseNegative:75
+match precision :0.839324272831
+leader match recall:0.464739884393
+true profile:0 false profile:0
+true frontal:1206 false frontal:1190
+threshold:1.05
+right:1336,5356 falsePositive:1060 falseNegative:121
+match precision :0.849993649181
+leader match recall:0.514836223507
+true profile:0 false profile:0
+true frontal:1336 false frontal:1060
+threshold:1.1
+right:1496,5268 falsePositive:900 falseNegative:209
+match precision :0.859138828909
+leader match recall:0.576493256262
+true profile:0 false profile:0
+true frontal:1496 false frontal:900
+threshold:1.15
+right:1626,5136 falsePositive:770 falseNegative:341
+match precision :0.858884796139
+leader match recall:0.626589595376
+true profile:0 false profile:0
+true frontal:1626 false frontal:770
+threshold:1.2
+right:1779,4961 falsePositive:617 falseNegative:516
+match precision :0.856090435666
+leader match recall:0.685549132948
+true profile:0 false profile:0
+true frontal:1779 false frontal:617
+threshold:1.25
+right:1888,4677 falsePositive:508 falseNegative:800
+match precision :0.833862568271
+leader match recall:0.727552986513
+true profile:0 false profile:0
+true frontal:1888 false frontal:508

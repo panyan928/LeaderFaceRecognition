@@ -1,15 +1,15 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-import os,json,math,time,glob,cv2,sys
+#!/usr/bin/env python
+
+import _init_paths
+
+import os, glob, cv2, sys
 import numpy as np
 import tensorflow as tf
 from nets import nets_factory
-from skimage import io
 import utils2 as utils
-import face_embedding, argparse, shutil
+import face_embedding, argparse
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'py-R-FCN/lib'))
-# import _init_paths
 import fast_rcnn
 from fast_rcnn.config import cfg as detect_cfg
 from fast_rcnn.test import im_detect
@@ -81,31 +81,6 @@ class Config:
                 print('no profile / frontal file\n')
         return feature_fro, feature_pro
 
-
-
-tf.app.flags.DEFINE_string(
-    'master', '', 'The address of the TensorFlow master to use.')
-tf.app.flags.DEFINE_string(
-    'checkpoint_path', './cls_checkpoint/model.ckpt-60582',
-    'The directory where the model was written to or an absolute path to a '
-    'checkpoint file.')
-# tf.app.flags.DEFINE_string(
-#     'test_list', '', 'Test image list.')
-# tf.app.flags.DEFINE_string(
-#     'test_dir', '.', 'Test image directory.')
-# tf.app.flags.DEFINE_integer(
-#     'batch_size', 16, 'Batch size.')
-tf.app.flags.DEFINE_integer(
-    'num_classes', 2, 'Number of classes.')
-tf.app.flags.DEFINE_string(
-    'model_name', 'inception_v3', 'The name of the architecture to evaluate.')
-tf.app.flags.DEFINE_string(
-    'preprocessing_name', None, 'The name of the preprocessing to use. If left '
-    'as `None`, then the model_name flag is used.')
-tf.app.flags.DEFINE_integer(
-    'test_image_size', None, 'Eval image size')
-FLAGS = tf.app.flags.FLAGS
-
 if __name__ == '__main__':
     # tf.logging.set_verbosity(tf.logging.INFO)
     with tf.Graph().as_default():
@@ -118,27 +93,22 @@ if __name__ == '__main__':
             cfg.BaseFeat(leader)
         exit(0)
 
-        ####################
-        # Select the model #
-        ####################
+        ## classification model
+
+        cls_checkpoint_path = './cls_checkpoint/'
+        cls_model_name = 'inception_v3'
+        cls_image_size = 112
+
         network_fn = nets_factory.get_network_fn(
-            FLAGS.model_name,
-            num_classes=(FLAGS.num_classes),
+            cls_model_name,
+            num_classes=2,
             is_training=False)
 
-        #####################################
-        # Select the preprocessing function #
-        #####################################
-        preprocessing_name = FLAGS.preprocessing_name or FLAGS.model_name
+        if tf.gfile.IsDirectory(cls_checkpoint_path):
+            cls_checkpoint_path = tf.train.latest_checkpoint(cls_checkpoint_path)
+            print("Classification Model path:" + cls_checkpoint_path)
 
-        test_image_size = FLAGS.test_image_size or network_fn.default_image_size
-
-        if tf.gfile.IsDirectory(FLAGS.checkpoint_path):
-            checkpoint_path = tf.train.latest_checkpoint(FLAGS.checkpoint_path)
-        else:
-            checkpoint_path = FLAGS.checkpoint_path
-
-        tensor_input = tf.placeholder(tf.float32, [1, test_image_size, test_image_size, 3])
+        tensor_input = tf.placeholder(tf.float32, [1, cls_image_size, cls_image_size, 3])
         logits, _ = network_fn(tensor_input)
         logits = tf.nn.top_k(logits, 1)
         config = tf.ConfigProto()

@@ -1,0 +1,435 @@
+total leaders: 5DXPcountData:2576 leaders,7162 others 
+ Sum:9762 countDet:9762 no_label:1190
+detection recall:1.00246457178
+threshold:0.6
+right:548,6047 falsePositive:1970 falseNegative:7
+match precision :0.769365375642
+leader match recall:0.212732919255
+true profile:3717 false profile:1364 profile precision:0.731548907695
+true frontal:2878 false frontal:613 frontal precision:0.824405614437
+threshold:0.65
+right:682,6047 falsePositive:1836 falseNegative:7
+match precision :0.784997666822
+leader match recall:0.264751552795
+true profile:3791 false profile:1290 profile precision:0.746112969888
+true frontal:2938 false frontal:553 frontal precision:0.841592666858
+threshold:0.7
+right:838,6045 falsePositive:1680 falseNegative:9
+match precision :0.802963135791
+leader match recall:0.325310559006
+true profile:3867 false profile:1214 profile precision:0.761070655383
+true frontal:3016 false frontal:475 frontal precision:0.863935835004
+threshold:0.75
+right:970,6035 falsePositive:1548 falseNegative:19
+match precision :0.817195520299
+leader match recall:0.376552795031
+true profile:3940 false profile:1141 profile precision:0.775437905924
+true frontal:3065 false frontal:426 frontal precision:0.877971927814
+threshold:0.8
+right:1098,6022 falsePositive:1420 falseNegative:32
+match precision :0.83061129258
+leader match recall:0.426242236025
+true profile:4017 false profile:1064 profile precision:0.79059240307
+true frontal:3103 false frontal:388 frontal precision:0.888857061014
+threshold:0.85
+right:1221,5998 falsePositive:1297 falseNegative:56
+match precision :0.842160522632
+leader match recall:0.47399068323
+true profile:4084 false profile:997 profile precision:0.803778783704
+true frontal:3135 false frontal:356 frontal precision:0.898023488972
+threshold:0.9
+right:1394,5962 falsePositive:1124 falseNegative:92
+match precision :0.858142790481
+leader match recall:0.541149068323
+true profile:4176 false profile:905 profile precision:0.821885455619
+true frontal:3180 false frontal:311 frontal precision:0.910913778287
+threshold:0.95
+right:1517,5875 falsePositive:1001 falseNegative:179
+match precision :0.862342510499
+leader match recall:0.588897515528
+true profile:4226 false profile:855 profile precision:0.831726038181
+true frontal:3166 false frontal:325 frontal precision:0.906903466056
+threshold:1.0
+right:1645,5723 falsePositive:873 falseNegative:331
+match precision :0.859542697154
+leader match recall:0.638586956522
+true profile:4246 false profile:835 profile precision:0.835662271206
+true frontal:3122 false frontal:369 frontal precision:0.894299627614
+threshold:1.05
+right:1754,5473 falsePositive:764 falseNegative:581
+match precision :0.843093793747
+leader match recall:0.680900621118
+true profile:4224 false profile:857 profile precision:0.831332414879
+true frontal:3003 false frontal:488 frontal precision:0.860211973647
+threshold:1.1
+right:1851,5068 falsePositive:667 falseNegative:986
+match precision :0.80716285581
+leader match recall:0.718555900621
+true profile:4104 false profile:977 profile precision:0.807715016729
+true frontal:2815 false frontal:676 frontal precision:0.806359209396
+threshold:1.15
+right:1930,4480 falsePositive:588 falseNegative:1574
+match precision :0.747783481101
+leader match recall:0.749223602484
+true profile:3814 false profile:1267 profile precision:0.750639637867
+true frontal:2596 false frontal:895 frontal precision:0.743626468061
+threshold:1.2
+right:1999,3747 falsePositive:519 falseNegative:2307
+match precision :0.670321978535
+leader match recall:0.77600931677
+true profile:3493 false profile:1588 profile precision:0.687463097815
+true frontal:2253 false frontal:1238 frontal precision:0.64537381839
+threshold:1.25
+right:2069,2890 falsePositive:449 falseNegative:3164
+match precision :0.578511432571
+leader match recall:0.803183229814
+true profile:3019 false profile:2062 profile precision:0.594174375123
+true frontal:1940 false frontal:1551 frontal precision:0.55571469493
+JZMcountData:3782 leaders,12424 others 
+ Sum:15161 countDet:15161 no_label:1632
+detection recall:0.93551770949
+threshold:0.6
+right:1076,9827 falsePositive:2617 falseNegative:9
+match precision :0.805898440387
+leader match recall:0.284505552618
+true profile:5837 false profile:1744 profile precision:0.769951193774
+true frontal:5066 false frontal:882 frontal precision:0.851714862139
+threshold:0.65
+right:1277,9827 falsePositive:2416 falseNegative:9
+match precision :0.820755414295
+leader match recall:0.33765203596
+true profile:5937 false profile:1644 profile precision:0.783142065691
+true frontal:5167 false frontal:781 frontal precision:0.868695359785
+threshold:0.7
+right:1476,9822 falsePositive:2217 falseNegative:14
+match precision :0.835094981152
+leader match recall:0.390269698572
+true profile:6033 false profile:1548 profile precision:0.795805302731
+true frontal:5265 false frontal:683 frontal precision:0.885171486214
+threshold:0.75
+right:1648,9808 falsePositive:2045 falseNegative:28
+match precision :0.846773597457
+leader match recall:0.435748281333
+true profile:6123 false profile:1458 profile precision:0.807677087455
+true frontal:5333 false frontal:615 frontal precision:0.896603900471
+threshold:0.8
+right:1824,9789 falsePositive:1869 falseNegative:47
+match precision :0.85837829847
+leader match recall:0.482284505553
+true profile:6225 false profile:1356 profile precision:0.82113177681
+true frontal:5388 false frontal:560 frontal precision:0.90585070612
+threshold:0.85
+right:1989,9752 falsePositive:1704 falseNegative:84
+match precision :0.867839455983
+leader match recall:0.525912215759
+true profile:6316 false profile:1265 profile precision:0.833135470255
+true frontal:5425 false frontal:523 frontal precision:0.912071284465
+threshold:0.9
+right:2201,9691 falsePositive:1492 falseNegative:145
+match precision :0.879000665238
+leader match recall:0.581967213115
+true profile:6417 false profile:1164 profile precision:0.84645825089
+true frontal:5475 false frontal:473 frontal precision:0.920477471419
+threshold:0.95
+right:2354,9545 falsePositive:1339 falseNegative:291
+match precision :0.879518072289
+leader match recall:0.622421998942
+true profile:6469 false profile:1112 profile precision:0.853317504287
+true frontal:5430 false frontal:518 frontal precision:0.912911903161
+threshold:1.0
+right:2502,9292 falsePositive:1191 falseNegative:544
+match precision :0.871756966516
+leader match recall:0.661554732946
+true profile:6454 false profile:1127 profile precision:0.8513388735
+true frontal:5340 false frontal:608 frontal precision:0.897780766644
+threshold:1.05
+right:2626,8872 falsePositive:1067 falseNegative:964
+match precision :0.849878039766
+leader match recall:0.694341618191
+true profile:6356 false profile:1225 profile precision:0.838411819021
+true frontal:5142 false frontal:806 frontal precision:0.864492266308
+threshold:1.1
+right:2747,8210 falsePositive:946 falseNegative:1626
+match precision :0.809889866213
+leader match recall:0.726335272343
+true profile:6131 false profile:1450 profile precision:0.808732357209
+true frontal:4826 false frontal:1122 frontal precision:0.811365164761
+threshold:1.15
+right:2850,7262 falsePositive:843 falseNegative:2574
+match precision :0.747431443566
+leader match recall:0.753569539926
+true profile:5697 false profile:1884 profile precision:0.751483973091
+true frontal:4415 false frontal:1533 frontal precision:0.742266308003
+threshold:1.2
+right:2947,6104 falsePositive:746 falseNegative:3732
+match precision :0.669007317614
+leader match recall:0.77921734532
+true profile:5178 false profile:2403 profile precision:0.683023347843
+true frontal:3873 false frontal:2075 frontal precision:0.651143241426
+threshold:1.25
+right:3038,4759 falsePositive:655 falseNegative:5077
+match precision :0.576317540099
+leader match recall:0.803278688525
+true profile:4461 false profile:3120 profile precision:0.588444796201
+true frontal:3336 false frontal:2612 frontal precision:0.560860793544
+MZDcountData:5730 leaders,16385 others 
+ Sum:20843 countDet:20843 no_label:2320
+detection recall:0.942482477956
+threshold:0.6
+right:1517,12921 falsePositive:4073 falseNegative:12
+match precision :0.779463369864
+leader match recall:0.264746945899
+true profile:7859 false profile:2636 profile precision:0.748832777513
+true frontal:6579 false frontal:1449 frontal precision:0.819506726457
+threshold:0.65
+right:1828,12920 falsePositive:3762 falseNegative:13
+match precision :0.796199319765
+leader match recall:0.319022687609
+true profile:8007 false profile:2488 profile precision:0.762934730824
+true frontal:6741 false frontal:1287 frontal precision:0.839686098655
+threshold:0.7
+right:2133,12915 falsePositive:3457 falseNegative:18
+match precision :0.812395400313
+leader match recall:0.372251308901
+true profile:8143 false profile:2352 profile precision:0.775893282515
+true frontal:6905 false frontal:1123 frontal precision:0.860114598904
+threshold:0.75
+right:2405,12900 falsePositive:3185 falseNegative:33
+match precision :0.82627004265
+leader match recall:0.419720767888
+true profile:8276 false profile:2219 profile precision:0.788565983802
+true frontal:7029 false frontal:999 frontal precision:0.875560538117
+threshold:0.8
+right:2708,12876 falsePositive:2882 falseNegative:57
+match precision :0.84133239756
+leader match recall:0.47260034904
+true profile:8444 false profile:2051 profile precision:0.804573606479
+true frontal:7140 false frontal:888 frontal precision:0.889387144993
+threshold:0.85
+right:2975,12828 falsePositive:2615 falseNegative:105
+match precision :0.85315553636
+leader match recall:0.519197207679
+true profile:8587 false profile:1908 profile precision:0.818199142449
+true frontal:7216 false frontal:812 frontal precision:0.898854010962
+threshold:0.9
+right:3266,12755 falsePositive:2324 falseNegative:178
+match precision :0.864924688225
+leader match recall:0.569982547993
+true profile:8722 false profile:1773 profile precision:0.831062410672
+true frontal:7299 false frontal:729 frontal precision:0.909192825112
+threshold:0.95
+right:3507,12570 falsePositive:2083 falseNegative:363
+match precision :0.867947956595
+leader match recall:0.612041884817
+true profile:8807 false profile:1688 profile precision:0.839161505479
+true frontal:7270 false frontal:758 frontal precision:0.905580468361
+threshold:1.0
+right:3742,12241 falsePositive:1848 falseNegative:692
+match precision :0.862873184689
+leader match recall:0.653054101222
+true profile:8814 false profile:1681 profile precision:0.839828489757
+true frontal:7169 false frontal:859 frontal precision:0.892999501744
+threshold:1.05
+right:3924,11736 falsePositive:1666 falseNegative:1197
+match precision :0.845435404632
+leader match recall:0.684816753927
+true profile:8711 false profile:1784 profile precision:0.83001429252
+true frontal:6949 false frontal:1079 frontal precision:0.865595416044
+threshold:1.1
+right:4112,10904 falsePositive:1478 falseNegative:2029
+match precision :0.810667818388
+leader match recall:0.717626527051
+true profile:8448 false profile:2047 profile precision:0.804954740353
+true frontal:6568 false frontal:1460 frontal precision:0.818136522172
+threshold:1.15
+right:4269,9662 falsePositive:1321 falseNegative:3271
+match precision :0.752091993738
+leader match recall:0.74502617801
+true profile:7904 false profile:2591 profile precision:0.753120533587
+true frontal:6027 false frontal:2001 frontal precision:0.750747384155
+threshold:1.2
+right:4407,8152 falsePositive:1183 falseNegative:4781
+match precision :0.678021918696
+leader match recall:0.769109947644
+true profile:7220 false profile:3275 profile precision:0.687946641258
+true frontal:5339 false frontal:2689 frontal precision:0.66504733433
+threshold:1.25
+right:4544,6437 falsePositive:1046 falseNegative:6496
+match precision :0.592830535011
+leader match recall:0.793019197208
+true profile:6322 false profile:4173 profile precision:0.602382086708
+true frontal:4659 false frontal:3369 frontal precision:0.580343796712
+PLYcountData:7932 leaders,23386 others 
+ Sum:28916 countDet:28916 no_label:2808
+detection recall:0.923302892905
+threshold:0.6
+right:2529,18349 falsePositive:5214 falseNegative:16
+match precision :0.799678259537
+leader match recall:0.318835098336
+true profile:10851 false profile:3259 profile precision:0.769029057406
+true frontal:10027 false frontal:1971 frontal precision:0.835722620437
+threshold:0.65
+right:2958,18346 falsePositive:4785 falseNegative:19
+match precision :0.815995097288
+leader match recall:0.372919818457
+true profile:11042 false profile:3068 profile precision:0.782565556343
+true frontal:10262 false frontal:1736 frontal precision:0.855309218203
+threshold:0.7
+right:3385,18336 falsePositive:4358 falseNegative:29
+match precision :0.831967213115
+leader match recall:0.426752395361
+true profile:11225 false profile:2885 profile precision:0.795535081502
+true frontal:10496 false frontal:1502 frontal precision:0.874812468745
+threshold:0.75
+right:3774,18319 falsePositive:3969 falseNegative:46
+match precision :0.84621571932
+leader match recall:0.475794251135
+true profile:11404 false profile:2706 profile precision:0.808221119773
+true frontal:10689 false frontal:1309 frontal precision:0.890898483081
+threshold:0.8
+right:4173,18277 falsePositive:3570 falseNegative:88
+match precision :0.859889688984
+leader match recall:0.526096822995
+true profile:11616 false profile:2494 profile precision:0.823245924876
+true frontal:10834 false frontal:1164 frontal precision:0.902983830638
+threshold:0.85
+right:4544,18198 falsePositive:3199 falseNegative:167
+match precision :0.871074000306
+leader match recall:0.572869389813
+true profile:11811 false profile:2299 profile precision:0.837065910702
+true frontal:10931 false frontal:1067 frontal precision:0.911068511419
+threshold:0.9
+right:4910,18058 falsePositive:2833 falseNegative:307
+match precision :0.87973035085
+leader match recall:0.619011598588
+true profile:11971 false profile:2139 profile precision:0.848405386251
+true frontal:10997 false frontal:1001 frontal precision:0.916569428238
+threshold:0.95
+right:5232,17740 falsePositive:2511 falseNegative:625
+match precision :0.879883560594
+leader match recall:0.659606656581
+true profile:12064 false profile:2046 profile precision:0.854996456414
+true frontal:10908 false frontal:1090 frontal precision:0.909151525254
+threshold:1.0
+right:5530,17220 falsePositive:2213 falseNegative:1145
+match precision :0.871380419795
+leader match recall:0.697175995966
+true profile:12045 false profile:2065 profile precision:0.853649893692
+true frontal:10705 false frontal:1293 frontal precision:0.892232038673
+threshold:1.05
+right:5764,16452 falsePositive:1979 falseNegative:1913
+match precision :0.850926918952
+leader match recall:0.726676752395
+true profile:11871 false profile:2239 profile precision:0.841318214033
+true frontal:10345 false frontal:1653 frontal precision:0.86222703784
+threshold:1.1
+right:5995,15218 falsePositive:1748 falseNegative:3147
+match precision :0.812509575609
+leader match recall:0.755799293999
+true profile:11464 false profile:2646 profile precision:0.812473423104
+true frontal:9749 false frontal:2249 frontal precision:0.812552092015
+threshold:1.15
+right:6189,13432 falsePositive:1554 falseNegative:4933
+match precision :0.751532097441
+leader match recall:0.780257186082
+true profile:10721 false profile:3389 profile precision:0.759815733522
+true frontal:8900 false frontal:3098 frontal precision:0.741790298383
+threshold:1.2
+right:6353,11322 falsePositive:1390 falseNegative:7043
+match precision :0.676995556917
+leader match recall:0.800932929904
+true profile:9787 false profile:4323 profile precision:0.693621545004
+true frontal:7888 false frontal:4110 frontal precision:0.657442907151
+threshold:1.25
+right:6509,8946 falsePositive:1234 falseNegative:9419
+match precision :0.59196414892
+leader match recall:0.820600100857
+true profile:8566 false profile:5544 profile precision:0.607087172218
+true frontal:6889 false frontal:5109 frontal precision:0.574179029838
+XJPcountData:11043 leaders,38540 others 
+ Sum:42608 countDet:42608 no_label:3737
+detection recall:0.85932678539
+threshold:0.6
+right:4079,28161 falsePositive:6603 falseNegative:28
+match precision :0.829410100075
+leader match recall:0.36937426424
+true profile:17186 false profile:4146 profile precision:0.805644102756
+true frontal:15054 false frontal:2485 frontal precision:0.858315753464
+threshold:0.65
+right:4638,28150 falsePositive:6044 falseNegative:39
+match precision :0.843508013686
+leader match recall:0.419994566694
+true profile:17441 false profile:3891 profile precision:0.817597974873
+true frontal:15347 false frontal:2192 frontal precision:0.875021380923
+threshold:0.7
+right:5185,28136 falsePositive:5497 falseNegative:53
+match precision :0.857220035502
+leader match recall:0.469528207915
+true profile:17695 false profile:3637 profile precision:0.829504969061
+true frontal:15626 false frontal:1913 frontal precision:0.890928787274
+threshold:0.75
+right:5677,28107 falsePositive:5005 falseNegative:82
+match precision :0.869131228937
+leader match recall:0.514081318482
+true profile:17929 false profile:3403 profile precision:0.84047440465
+true frontal:15855 false frontal:1684 frontal precision:0.903985403957
+threshold:0.8
+right:6167,28047 falsePositive:4515 falseNegative:142
+match precision :0.88019346042
+leader match recall:0.558453318845
+true profile:18196 false profile:3136 profile precision:0.852990811926
+true frontal:16018 false frontal:1521 frontal precision:0.913278978277
+threshold:0.85
+right:6643,27907 falsePositive:4039 falseNegative:282
+match precision :0.888837436649
+leader match recall:0.601557547768
+true profile:18423 false profile:2909 profile precision:0.863632102006
+true frontal:16127 false frontal:1412 frontal precision:0.919493699755
+threshold:0.9
+right:7092,27671 falsePositive:3590 falseNegative:518
+match precision :0.894317100152
+leader match recall:0.642216788916
+true profile:18602 false profile:2730 profile precision:0.872023251453
+true frontal:16161 false frontal:1378 frontal precision:0.92143223673
+threshold:0.95
+right:7528,27165 falsePositive:3154 falseNegative:1024
+match precision :0.892516271771
+leader match recall:0.681698813728
+true profile:18699 false profile:2633 profile precision:0.876570410651
+true frontal:15994 false frontal:1545 frontal precision:0.911910599236
+threshold:1.0
+right:7915,26306 falsePositive:2767 falseNegative:1883
+match precision :0.880373543258
+leader match recall:0.716743638504
+true profile:18566 false profile:2766 profile precision:0.870335645978
+true frontal:15655 false frontal:1884 frontal precision:0.892582245282
+threshold:1.05
+right:8223,25051 falsePositive:2459 falseNegative:3138
+match precision :0.856010907875
+leader match recall:0.74463461016
+true profile:18203 false profile:3129 profile precision:0.853318957435
+true frontal:15071 false frontal:2468 frontal precision:0.859285021951
+threshold:1.1
+right:8525,23100 falsePositive:2157 falseNegative:5089
+match precision :0.813588536441
+leader match recall:0.7719822512
+true profile:17480 false profile:3852 profile precision:0.819426214138
+true frontal:14145 false frontal:3394 frontal precision:0.806488397286
+threshold:1.15
+right:8767,20402 falsePositive:1915 falseNegative:7787
+match precision :0.750405186386
+leader match recall:0.793896586073
+true profile:16282 false profile:5050 profile precision:0.763266454153
+true frontal:12887 false frontal:4652 frontal precision:0.734762529221
+threshold:1.2
+right:8956,17172 falsePositive:1726 falseNegative:11017
+match precision :0.672172056289
+leader match recall:0.811011500498
+true profile:14726 false profile:6606 profile precision:0.690324395275
+true frontal:11402 false frontal:6137 frontal precision:0.650094076059
+threshold:1.25
+right:9139,13580 falsePositive:1543 falseNegative:14609
+match precision :0.584471714131
+leader match recall:0.827583084307
+true profile:12775 false profile:8557 profile precision:0.598865554097
+true frontal:9944 false frontal:7595 frontal precision:0.566965049319

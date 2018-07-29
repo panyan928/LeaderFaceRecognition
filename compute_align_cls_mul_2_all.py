@@ -142,8 +142,6 @@ if __name__ == '__main__':
         #####################################
         # Select the preprocessing function #
         #####################################
-        preprocessing_name = FLAGS.preprocessing_name or FLAGS.model_name
-
         test_image_size = FLAGS.test_image_size or network_fn.default_image_size
 
         if tf.gfile.IsDirectory(FLAGS.checkpoint_path):

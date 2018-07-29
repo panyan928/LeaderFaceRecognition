@@ -1,0 +1,6 @@
+countData:2422 leaders,7331 others 
+Sum:7462 countDet:6998 no_label:312
+detection recall:0.765097918589
+right:1330,4553 falsePositive:741 falseNegative:62
+match precision :0.879898294945
+leader match recall:0.549132947977

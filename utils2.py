@@ -4,9 +4,10 @@
 import cv2
 from PIL import Image,ImageDraw
 import os
+
 def get_bbox(bbs_path, label, default_leader):
     bbs = list()
-    bbs_other= list()
+    bbs_other = list()
     # print(label)
     name = label.split(';')[0]
     txt_path = bbs_path + name + '.txt'
@@ -16,29 +17,42 @@ def get_bbox(bbs_path, label, default_leader):
     #     txt_path = bbs_path + label.split(';')[0] + '.txt'
     for line in open(txt_path):
         info = line.split(' ')
-        if len(info) != 7:
+        if len(info) != 6:
             print('error line in {}: {}'.format(txt_path, info))
             continue
         flag = False
         temp = label.split(';')
-        pose = -1
         for i in temp[1:]:
             # label type: '1'  '11'  '1:xjp' '-1'
-            if len(i)<=2 and info[0] == i:
+            if len(i) <= 2 and info[0] == i:
                 bbs.append([info[1], info[2], info[3], info[4], info[0], default_leader, pose])
                 flag = True
                 break
-            elif len(i)>2 and info[0]==i.split(':')[0]:
+            elif len(i) > 2 and info[0] == i.split(':')[0]:
                 other_leader = i.split(':')[1]
-                if other_leader == 'xjp' or other_leader=='dxp' or other_leader=='mzd' or other_leader=='ply' or other_leader == 'jzm':
+                if other_leader == 'xjp' or other_leader == 'dxp' or other_leader == 'mzd' or other_leader == 'ply' or other_leader == 'jzm':
                     flag = True
-                    bbs.append([info[1], info[2], info[3], info[4], info[0], other_leader.upper(), pose])
+                    bbs.append([info[1], info[2], info[3], info[4], info[0], other_leader.upper(), None])
         if not flag:
-            bbs_other.append([info[1], info[2], info[3], info[4], info[0], 'OTHERS', pose])
+            bbs_other.append([info[1], info[2], info[3], info[4], info[0], 'OTHERS', None])
     return bbs, bbs_other
 
-def get_img_path(img_path, img_name):
-    return img_path+img_name+'.jpg'
+def get_bbox_new(bbs_path, name):
+    bbs = list()
+    bbs_other= list()
+    txt_path = bbs_path + name + '.txt'
+    if not os.path.exists(txt_path):
+        return None
+    for line in open(txt_path):
+        info = line.split(' ')
+        if len(info) != 7:
+            print('error line in {}: {}'.format(txt_path, info))
+            continue
+        if info[-2] != 'OTHERS':
+            bbs.append([info[1], info[2], info[3], info[4], info[0], info[5], info[6]])
+        else:
+            bbs_other.append([info[1], info[2], info[3], info[4], info[0], info[5], info[6]])
+    return bbs, bbs_other
 
 #Image type
 def write_bbs_Image(img, bbs, save_root, img_name, flag):
@@ -56,6 +70,7 @@ def write_bbs_Image(img, bbs, save_root, img_name, flag):
     # img.show()
     print(save_root + img_name+'.jpg')
     # img.save(save_root + img_name+'.jpg', 'JPEG')
+
 #opencv
 def write_bbs(img, bbs, save_root, img_name, flag):
     # if flag == 1:

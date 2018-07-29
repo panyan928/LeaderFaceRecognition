@@ -38,7 +38,7 @@ leader_list = ['DXP', 'JZM', 'MZD', 'XJP', 'PLY']
 
 
 save_path = './txts_new/'
-fp_path = './detect_clean/'
+fp_path = './detect_clean_2/'
 
 GT = dict()
 RT = dict()
@@ -121,7 +121,7 @@ def demo(net, leader, label):
         dets = dets[keep, :]
         inds = np.where(dets[:, -1] >= CONF_THRESH)[0]
         for i in inds:
-            bbox.append(dets[i,:4])
+            bbox.append(dets[i, :4])
             # cv2.rectangle(im, (dets[i,0], dets[i, 1]), (dets[i, 2], dets[i, 3]), (255, 0, 0))
             # cv2.putText(im, str(dets[i, -1]), (int((dets[i,0]+dets[i,2])/2), int((dets[i, 1]+ dets[i, 3])/2)), 0, 1, (255,0,0))
 
@@ -140,6 +140,9 @@ def demo(net, leader, label):
                 p_img_path = fp_path + bb[5] + '/pro/' + img_name + '_{}.jpg'.format(i)
                 if os.path.exists(p_img_path):
                     pose = 1
+                q_img_path = fp_path + bb[5] + '/quarter/' + img_name + '_{}.jpg'.format(i)
+                if os.path.exists(q_img_path):
+                    pose = 2
                 bbs[j][6] = pose
                 break
 
@@ -155,6 +158,9 @@ def demo(net, leader, label):
                 p_img_path = fp_path + 'OTHERS/pro/' + img_name + '_{}.jpg'.format(i)
                 if os.path.exists(p_img_path):
                     pose = 1
+                q_img_path = fp_path + bb[5] + '/quarter/' + img_name + '_{}.jpg'.format(i)
+                if os.path.exists(q_img_path):
+                    pose = 2
                 bbs_other[j][6] = pose
                 break
 

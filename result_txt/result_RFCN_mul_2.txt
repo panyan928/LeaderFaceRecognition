@@ -1,0 +1,87 @@
+total leaders: 5DXP countData:2595 leaders,7493 others 
+ Sum:9735 countDet:8741 no_label:1216
+detection recall:0.965007930214
+threshold:0.6
+right:369,5215 falsePositive:1936 falseNegative:5
+match precision :0.742059800664
+leader match recall:0.142196531792
+true profile:46 false profile:647
+true frontal:323 false frontal:1289
+threshold:0.65
+right:454,5215 falsePositive:1851 falseNegative:5
+match precision :0.753355481728
+leader match recall:0.174951830443
+true profile:55 false profile:638
+true frontal:399 false frontal:1213
+threshold:0.7
+right:525,5213 falsePositive:1780 falseNegative:7
+match precision :0.762524916944
+leader match recall:0.202312138728
+true profile:67 false profile:626
+true frontal:458 false frontal:1154
+threshold:0.75
+right:617,5212 falsePositive:1688 falseNegative:8
+match precision :0.774617940199
+leader match recall:0.237764932563
+true profile:79 false profile:614
+true frontal:538 false frontal:1074
+threshold:0.8
+right:722,5211 falsePositive:1583 falseNegative:9
+match precision :0.788438538206
+leader match recall:0.278227360308
+true profile:97 false profile:596
+true frontal:625 false frontal:987
+threshold:0.85
+right:836,5210 falsePositive:1469 falseNegative:10
+match precision :0.803455149502
+leader match recall:0.322157996146
+true profile:123 false profile:570
+true frontal:713 false frontal:899
+threshold:0.9
+right:942,5200 falsePositive:1363 falseNegative:20
+match precision :0.816212624585
+leader match recall:0.363005780347
+true profile:155 false profile:538
+true frontal:787 false frontal:825
+threshold:0.95
+right:1066,5182 falsePositive:1239 falseNegative:38
+match precision :0.830299003322
+leader match recall:0.410789980732
+true profile:193 false profile:500
+true frontal:873 false frontal:739
+threshold:1.0
+right:1190,5161 falsePositive:1115 falseNegative:59
+match precision :0.843986710963
+leader match recall:0.458574181118
+true profile:240 false profile:453
+true frontal:950 false frontal:662
+threshold:1.05
+right:1318,5126 falsePositive:987 falseNegative:94
+match precision :0.85634551495
+leader match recall:0.507899807322
+true profile:290 false profile:403
+true frontal:1028 false frontal:584
+threshold:1.1
+right:1469,5049 falsePositive:836 falseNegative:171
+match precision :0.866179401993
+leader match recall:0.566088631985
+true profile:357 false profile:336
+true frontal:1112 false frontal:500
+threshold:1.15
+right:1596,4933 falsePositive:709 falseNegative:287
+match precision :0.867641196013
+leader match recall:0.615028901734
+true profile:416 false profile:277
+true frontal:1180 false frontal:432
+threshold:1.2
+right:1745,4774 falsePositive:560 falseNegative:446
+match precision :0.866312292359
+leader match recall:0.672447013487
+true profile:479 false profile:214
+true frontal:1266 false frontal:346
+threshold:1.25
+right:1845,4518 falsePositive:460 falseNegative:702
+match precision :0.845581395349
+leader match recall:0.71098265896
+true profile:511 false profile:182
+true frontal:1334 false frontal:278
