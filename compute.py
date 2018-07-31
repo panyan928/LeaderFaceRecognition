@@ -8,17 +8,42 @@ import tensorflow as tf
 from nets import nets_factory
 import utils2 as utils
 import face_embedding, argparse
-
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'py-R-FCN/lib'))
-import fast_rcnn
+import _init_paths
 from fast_rcnn.config import cfg as detect_cfg
 from fast_rcnn.test import im_detect
 from fast_rcnn.nms_wrapper import nms
 import caffe
-import matplotlib.pyplot as plt
 import face_align
+import mxnet as mx
 
 slim = tf.contrib.slim
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Compute Recognition Result')
+    parser.add_argument('--result', default = 'compute', help = '')
+    parser.add_argument('--output-txt', default='result_txt/result.txt', help = 'file to save computation result')
+    parser.add_argument('--detection-model', default='RFCN', help = 'detection model, RFCN, MTCNN or DLIB')
+    parser.add_argument('--landmarks-model', default= 'FaceAlign', help = 'get landmarks model, FaceAlign or MTCNN')
+    parser.add_argument('--mul-thres', type = bool, default = True, help = 'whether use multi thresholds')
+    parser.add_argument('--thresholds', type = str, default = '0.8, 1.6')
+    parser.add_argument('--save-root', default = './detect_compute')
+    parser.add_argument('--gpu', type = int, default = 1)
+    args = parser.parse_args()
+    return args
+
+def init_dict(min_threshold, max_threshold, list=False, str = False):
+    temp = dict()
+    if list:
+        for threshold in range(int(min_threshold * 100), int(max_threshold * 100), 5):
+            temp[threshold] = [0, 0]
+        return temp
+    if str:
+        for threshold in range(int(min_threshold * 100), int(max_threshold * 100), 5):
+            temp[threshold] = 'OTHERS'
+        return temp
+    for threshold in range(int(min_threshold * 100), int(max_threshold * 100), 5):
+        temp[threshold] = 0
+    return temp
 
 
 def calculateIoU(candidateBound, groundTruthBound):
@@ -48,51 +73,92 @@ def calculateIoU(candidateBound, groundTruthBound):
     return iou
 
 class Config:
-    leaders_sml = ['DXP','JZM', 'MZD', 'PLY', 'XJP', 'OTHERS']#,
-    save_root = './detect_compute'
-    label_path_root = './result2'
-    bbs_path_root = './txts'
-    img_path_root = './raw'
+    def __init__(self):
+        self.leaders_sml = ['DXP', 'JZM', 'MZD', 'PLY', 'XJP', 'OTHERS']
+        self.label_path_root = './result2'
+        self.bbs_path_root = './txts_new'
+        self.img_path_root = './raw'
+        self.feat_box_fro = dict()
+        self.feat_box_pro = dict()
+        self.img_box_fro = dict()
+        self.img_box_pro = dict()
+
     def BaseFeat(self, leader):
         feature_fro = list()
         feature_pro = list()
-        bases = glob.glob('raw2/' + leader + '-base/' +leader+'_*.jpg')
+        img_fro = list()
+        img_pro = list()
+        bases = glob.glob('raw3/' + leader + '-base/' +leader+'_*.jpg')
         # bases = glob.glob('raw2/' + leader + '-base/*.jpg')
-        for n, path in enumerate(bases):
-            label = os.path.basename(path)[:-4] + ';0;'
-            print(label)
+        for path in bases:
+            print(path)
             img = cv2.imread(path)
-            # print(img.shape)
-            bbs, bbs_other = utils.get_bbox('txts_fp/' + leader + '/', label, default_leader=leader)
-            print(bbs)
+            bbs, bbs_other = utils.get_bbox_new( self.bbs_path_root +'/'+ leader + '/', os.path.basename(path)[:-4])
             bound1 = (float(bbs[0][0]), float(bbs[0][1]), float(bbs[0][2])+float(bbs[0][0]), float(bbs[0][3])+float(bbs[0][1]))
-            cv2.rectangle(img, (int(bound1[0]), int(bound1[1])), (int(bound1[2]), int(bound1[3])), (255, 0, 0))
-            cv2.imshow('result', img)
-            cv2.waitKey(0)
-            continue
-            preds = fa.get_landmarks(path , bound1)[-1]
+            preds = fa.get_landmarks(path, bound1)[-1]
             ## face embedding 512d
-            f = model.get_feature_by_landmark(img, bound1, preds)
-            if bbs[0][6] == 1:
+            f, nimg = model.get_feature_by_landmark(img, bound1, preds)
+            if bbs[0][6] == '1':
                 feature_pro.append(f)
-            elif bbs[0][6] == 0:
+                img_pro.append(nimg)
+            elif bbs[0][6] == '0' or bbs[0][6] == '2':
                 feature_fro.append(f)
+                img_fro.append(nimg)
             else:
                 print('no profile / frontal file\n')
-        return feature_fro, feature_pro
+        return feature_fro, img_fro, feature_pro, img_pro
+    def set(self):
+        for leader in self.leaders_sml[:-1]:
+            self.feat_box_fro[leader], self.img_box_fro[leader], self.feat_box_pro[leader], \
+            self.img_box_pro = self.BaseFeat(leader)
+
 
 if __name__ == '__main__':
     # tf.logging.set_verbosity(tf.logging.INFO)
+
+    args = parse_args()
+
+    #################################
+    # Load face detector model RFCN #
+    #################################
+    if args.detection_model == 'RFCN':
+        prototxt = './py-R-FCN/model/test_agonistic_face.prototxt'
+        caffemodel = './py-R-FCN/model/resnet101_rfcn_ohem_iter_40000.caffemodel'
+        detect_cfg.TEST.HAS_RPN = True
+        caffe.set_mode_gpu()
+        caffe.set_device(0)
+        detect_cfg.GPU_ID = 0
+        net = caffe.Net(prototxt, caffemodel, caffe.TEST)
+        print ('\n\nLoaded network {:s}'.format(caffemodel))
+    ##################################
+    # Load landmark detect and align #
+    ##################################
+    if args.landmarks_model == 'FaceAlign':
+        fa = face_align.FaceAlignment(face_align.LandmarksType._2D, enable_cuda=True)
+
+    ####################
+    # Load InsightFace #
+    ####################
+    parser_i = argparse.ArgumentParser(description='face model test')
+    parser_i.add_argument('--image-size', default='112,112', help='')
+    parser_i.add_argument('--model', default='./model-r50-am-lfw/model,0', help='path to load model.')
+    parser_i.add_argument('--gpu', default=0, type=int, help='gpu id')
+    parser_i.add_argument('--det', default=2, type=int, help='mtcnn option, 2 means using R+O, else using O')
+    parser_i.add_argument('--flip', default=0, type=int, help='whether do lr flip aug')
+    args_i = parser_i.parse_args()
+    model = face_embedding.FaceModel(args_i)
+
+    ######################
+    # Load Vec2Vec Model #
+    ######################
+
+    sym, arg_params, aux_params = mx.model.load_checkpoint('model-vec2vec/model-leader-xjp', 48)
+    mod_vec2vec = mx.mod.Module(sym, context=mx.gpu(0), label_names=None)
+    mod_vec2vec.bind(for_training=False, data_shapes=[('data', (1, 3, 224, 112))], label_shapes=mod_vec2vec._label_shapes)
+    mod_vec2vec.set_params(arg_params, aux_params, allow_missing=True)
+
     with tf.Graph().as_default():
         # tf_global_step = slim.get_or_create_global_step()
-        cfg = Config()
-        feat_box_fro = dict()
-        feat_box_pro = dict()
-        for leader in cfg.leaders_sml[:-1]:
-            save_root = '{}/{}/'.format(cfg.save_root, leader)
-            cfg.BaseFeat(leader)
-        exit(0)
-
         ## classification model
 
         cls_checkpoint_path = './cls_checkpoint/'
@@ -113,119 +179,81 @@ if __name__ == '__main__':
         logits = tf.nn.top_k(logits, 1)
         config = tf.ConfigProto()
         config.gpu_options.allow_growth = True
-        # test_ids = [line.strip() for line in open(FLAGS.test_list)]
-        # tot = len(test_ids)
-        # results = list()
-
-        #################################
-        # Load face detector model RFCN #
-        #################################
-        prototxt = '/home/disk3/py/py-R-FCN/models/pascal_voc/ResNet-101/rfcn_end2end/test_agonistic_face.prototxt'    
-        caffemodel = '/home/disk3/py/py-R-FCN/data/rfcn_models/resnet101_rfcn_ohem_iter_40000.caffemodel'
-        detect_cfg.TEST.HAS_RPN = True
-        caffe.set_mode_gpu()
-        caffe.set_device(0)
-        detect_cfg.GPU_ID = 0
-        net = caffe.Net(prototxt, caffemodel, caffe.TEST)
-        print ('\n\nLoaded network {:s}'.format(caffemodel))
-
-        ##################################
-        # Load landmark detect and align #
-        ##################################
-        fa = face_align.FaceAlignment(face_align.LandmarksType._2D, enable_cuda=True)
-
-        ####################
-        # Load InsightFace #
-        ####################
-        parser = argparse.ArgumentParser(description='face model test')
-        parser.add_argument('--image-size', default='112,112', help='')
-        parser.add_argument('--model', default='./model-r50-am-lfw/model,0', help='path to load model.')
-        parser.add_argument('--gpu', default=0, type=int, help='gpu id')
-        parser.add_argument('--det', default=2, type=int, help='mtcnn option, 2 means using R+O, else using O')
-        parser.add_argument('--flip', default=0, type=int, help='whether do lr flip aug')
-        args = parser.parse_args()
-        model = face_embedding.FaceModel(args)
 
         ###############################
         # Deploy file path and params #
         ###############################
         cfg = Config()
-        feat_box_fro = dict()
-        feat_box_pro = dict()
-        output = open('result_txt/result_align_cls_mul_2_all_v1.txt', 'w')
+        cfg.set()
+        output = open(args.output_txt, 'w')
         output.write('total leaders: {}'.format(len(cfg.leaders_sml[:-1])))
         countDet = 0
         countData = [0, 0]
         no_label = 0
-        right = dict()
-        FN = dict()
-        FP = dict() 
-        precision = dict()
-        recall = dict()
-        score = dict()
-        result = dict()
-        num = 0
 
-        true_profile = dict() 
-        true_frontal = dict()
-        false_profile = dict()
-        false_frontal = dict()
+        if args.mul_thres:
+            assert ',' in args.thresholds
+            min_thre = float(args.thresholds.split(',')[0])
+            max_thre = float(args.thresholds.split(',')[1])
+            right_fro = init_dict(min_thre, max_thre, list=True)
+            score = init_dict(min_thre, max_thre)
+            result = init_dict(min_thre, max_thre, str = True)
+            num = 0
+            fp_fro = init_dict(min_thre, max_thre)
+            fn_fro = init_dict(min_thre, max_thre)
+        else:
+            threshold = float(args.thresholds)
+            right_fro = [0, 0]
+            num = 0
+            fp_fro = 0
+            fn_fro = 0
+        right_pro = [0, 0]
+        fn_pro = 0
+        fp_pro = 0
 
         for leader in cfg.leaders_sml[:-1]:
-            save_root = '{}/{}/'.format(cfg.save_root, leader)
-            f1_fro, f1_pro = cfg.BaseFeat(leader)
-            feat_box_fro[leader] = f1_fro
-            feat_box_pro[leader] = f1_pro
-
-
-        for threshold in range(60, 150, 5):
-            threshold = threshold * 0.01
-            right[threshold] = [0, 0]
-            FN[threshold] = 0
-            FP[threshold] = 0
-            score[threshold] = 0
-            true_frontal[threshold] = 0
-            false_frontal[threshold] = 0
-            true_profile[threshold] = 0
-            false_profile[threshold] = 0
-            result[threshold] = 'OTHERS'
+            save_root = '{}/{}/'.format(args.save_root, leader)
+            if not os.path.exists(save_root):
+                os.mkdir(save_root)
+            if not os.path.exists(save_root + 'right0/'):
+                os.mkdir(save_root + 'right0/')
+                os.mkdir(save_root + 'right1/')
+                os.mkdir(save_root + 'falseNegative')
+                os.mkdir(save_root + 'falsePositive')
+                os.mkdir(save_root + 'no_label')
 
         with tf.Session(config=config) as sess:
             sess.run(tf.global_variables_initializer())
             saver = tf.train.Saver()
-            saver.restore(sess, checkpoint_path)
+            saver.restore(sess, cls_checkpoint_path)
 
             ###############################
             # Detect image Loop by leader #
             ###############################
-            for leader in cfg.leaders_sml[:-1]:
+            for leader in ['XJP']:
                 output.write(leader)
                 # result2/DXP/DXP.txt
                 label_file_path = '{0}/{1}/{1}.txt'.format(cfg.label_path_root, leader)
-                # txts/DXP/
+                # txts_new/DXP/
                 bbs_path = '{}/{}/'.format(cfg.bbs_path_root, leader)
                 # raw/DXP-craw/
                 img_path = '{}/{}-craw/'.format(cfg.img_path_root, leader)
                 # detect_result/DXP/
-                save_root = '{}/{}/'.format(cfg.save_root, leader)
-                for label in open(label_file_path):
-                    if len(label) == 10:
-                        label = label[:-1]
-                    print(label)
-                    img_name = label.split(';')[0]+'.jpg'
+                save_root = '{}/{}/'.format(args.save_root, leader)
+                img_names = os.listdir(img_path)
+                img_names.sort()
+                for img_name in img_names:
+                    print(img_name)
                     # load image
                     img_cv = cv2.imread(img_path + img_name)
-                    if img_cv is None:
-                        img_name = img_name[:-4]+'.JPG'
-                        img_cv = cv2.imread(img_path + img_name)
                     # img_tf = open(img_path + img_name, 'rb').read()
                     # img_tf = tf.image.decode_jpeg(img_tf, channels=3)
 
                     # Get groundtruth of one image 
                     # bbs: '[x, y, w, h, num, leader]'
-                    gt = utils.get_bbox(bbs_path, label, default_leader = leader)
+                    gt = utils.get_bbox_new(bbs_path, img_name)
                     if gt is None:
-                        continue
+                        raise RuntimeError
                     bbs = gt[0]
                     bbs_other = gt[1]
                     countData[0] += len(bbs) # 
@@ -253,7 +281,6 @@ if __name__ == '__main__':
                     num += len(bbox)
 
                     for d in bbox:
-                        bound1 = (float(d[0]), float(d[1]), float(d[2]), float(d[3]))
                         # first find groundtruth, 
                         iou = 0
                         positive = 'OTHERS'
@@ -261,7 +288,7 @@ if __name__ == '__main__':
                         for bb in (bbs + bbs_other):
                             bound2 = (float(bb[0]), float(bb[1]),
                                       float(bb[0]) + float(bb[2]), float(bb[1])+float(bb[3]))
-                            iou = calculateIoU(bound1, bound2)
+                            iou = calculateIoU(d, bound2)
                             if iou >= 0.5:
                                 positive = bb[5]
                                 pose = bb[6]
@@ -269,20 +296,16 @@ if __name__ == '__main__':
                         # no groundtruth , continue to next face
                         if iou < 0.5:
                             print("the face no label")
-                            # cv2.putText(img_cv, str(i) + 'no label', (bound1[0], bound1[1]), 0, 1, (255, 0, 0))
-                            # cv2.imwrite(save_root +'no_label/' +img_name + '.jpg', img_cv)
+                            if not args.mul_thres:
+                                cv2.putText(img_cv, str(i) + 'no label', (int(d[0]), int(d[1])), 0, 1, (255, 0, 0))
+                                cv2.imwrite(save_root +'no_label/' + img_name, img_cv)
                             no_label += 1
                             continue
 
-
-                        ## face landmark detection
-                        preds = fa.get_landmarks(img_path + img_name, bound1)[-1]
-                        ## face embedding 512d
-                        f = model.get_feature_by_landmark(img_cv, bound1, preds)
-
+                        countDet += 1
                         # d = [int(round(d[0])), int(round(d[1])), int(round(d[2])), int(round(d[3]))]
-                        bound1 = (max(0, int(bound1[0])), max(0, int(bound1[1])),
-                                  min(int(bound1[2]), width), min(int(bound1[3]), height))
+                        bound1 = (max(0, int(d[0])), max(0, int(d[1])),
+                                  min(int(d[2]), width), min(int(d[3]), height))
 
                         ### Add a step
                         ### classify the face profile or frontal
@@ -300,107 +323,105 @@ if __name__ == '__main__':
                             predictions = sess.run(logits, feed_dict = {tensor_input : img_temp_cls}).indices
                             pose = predictions[0]
 
-                        if pose == 1:
-                            feat_box = feat_box_pro
-                        else:
-                            feat_box = feat_box_fro
+                        ## face landmark detection
+                        preds = fa.get_landmarks(img_path + img_name, d)[-1]
+                        ## face embedding 512d
+                        f, nimg = model.get_feature_by_landmark(img_cv, d, preds)
 
-                        countDet += 1
-                        for s in score:
-                            score[s] = 999
-                            result[s] = 'OTHERS'
-                        for feat_leader in feat_box:
-                            for f2 in feat_box[feat_leader]:
-                                dist = np.sum(np.square(f - f2))
-                                for threshold in range(60, 150, 5):
-                                    threshold = threshold * 0.01
-                                    if dist < threshold and dist < score[threshold]:
-                                        score[threshold] = dist
-                                        result[threshold] = feat_leader
-                        
-                        for threshold in range(60, 150, 5):
-                            threshold = threshold * 0.01
-                            if result[threshold] == positive: 
-                                if result[threshold] == 'OTHERS':
-                                    right[threshold][1] += 1
-                                    if pose == 0:
-                                        true_frontal[threshold] += 1
-                                    elif pose == 1:
-                                        true_profile[threshold] += 1
+                        if pose == 1: ## use vec2vec model when assured profiles
+                            max_prob = 0
+                            result_v2v = 'OTHERS'
+                            for leader in cfg.leaders_sml[:-1]:
+                                for f_img in cfg.img_box_fro[leader]:
+                                    img_contate = np.concatenate(nimg, f_img, axis = 0)
+                                    img_contate = img_contate.transpose((2,0,1))
+                                    img_contate = np.expand_dims(img_contate, 0)
+                                    test = mx.nd.array(img_contate)
+                                    test = mx.io.DataBatch(data=(test,))
+                                    mod_vec2vec.forward(test)
+                                    prob = mod_vec2vec.get_outputs()[0].asnumpy()
+                                    prob = np.squeeze(prob)
+                                    a = np.argsort(prob)[::-1]
+                                    ### vec2vec model predict possibility/probability of same person
+                                    if a[0] == 0 and max_prob < prob[0]:
+                                        result_v2v = leader
+                                        max_prob = prob[0]
+                            ## compute right or wrong
+                            if result_v2v == positive:
+                                if positive != 'OTHERS':
+                                    right_pro[0] += 1
+                                    cv2.imwrite('{}right0/{}_p_{}.jpg'.format(save_root, img_name[:-4], i), nimg)
                                 else:
-                                    right[threshold][0] += 1
-                                    if pose == 0:
-                                        true_frontal[threshold] += 1
-                                    elif pose == 1:
-                                        true_profile[threshold] += 1
-                            elif positive != 'OTHERS': 
-                                # cv2.putText(img_cv, str(i) + result[threshold] + ' ' + positive, (bound1[0], bound1[1]), 0, 0.5, (0, 255, 0))
-                                # cv2.imwrite(save_root + 'falsePositive/' + img_name + '.jpg', img_cv)
-                                FP[threshold] += 1
-                                if pose == 0:
-                                    false_frontal[threshold] += 1
-                                elif pose == 1:
-                                    false_profile[threshold] += 1
-                            else: # result != 'OTHERS': 
-                                FN[threshold] += 1
-                                if pose == 0:
-                                    false_frontal[threshold] += 1
-                                elif pose == 1:
-                                    false_profile[threshold] += 1
+                                    right_pro[1] += 1
+                                    cv2.imwrite('{}right1/{}_p_{}.jpg'.format(save_root, img_name[:-4], i), nimg)
+                            elif positive != 'OTHERS':
+                                fn_pro += 1
+                            else:
+                                fp_pro += 1
 
-                        # img_temp = img_cv[bound1[1]:bound1[3], bound1[0]:bound1[2]]
-                        # print(bound1)
-                        # run classification
+                        else:
+                            feat_box = cfg.feat_box_fro
+                            if args.mul_thres:
+                                for s in score:
+                                    score[s] = 999
+                                    result[s] = 'OTHERS'
+                                for feat_leader in feat_box:
+                                    for f2 in feat_box[feat_leader]:
+                                        dist = np.sum(np.square(f - f2))
+                                        for threshold in score:
+                                            if dist < threshold and dist < score[threshold]:
+                                                score[threshold] = dist
+                                                result[threshold] = feat_leader
+                        
+                                for threshold in result:
+                                    if result[threshold] == positive:
+                                        if result[threshold] == 'OTHERS':
+                                            right_fro[threshold][1] += 1
+                                        else:
+                                            right_fro[threshold][0] += 1
+                                    elif positive != 'OTHERS':
+                                        fn_fro[threshold] += 1
+                                    else: # result != 'OTHERS':
+                                        fp_fro[threshold] += 1
 
-                    for threshold in range(60, 150, 5):
-                        threshold = threshold * 0.01
-                        if countDet != 0:
-                            precision = float(right[threshold][0]+right[threshold][1]) / (countDet)
-                        else:
-                            precision = 0
-                        recall = float(right[threshold][0]) / countData[0]
-                        if true_profile[threshold] + false_profile[threshold] == 0:
-                            profile_precision = 0
-                        else:
-                            profile_precision = true_profile[threshold] / (true_profile[threshold] + false_profile[threshold])
-                        if true_frontal[threshold] + false_frontal[threshold] == 0:
-                            frontal_precision = 0
-                        else:
-                            frontal_precision = true_frontal[threshold] / (true_frontal[threshold] + false_frontal[threshold])
+                                # img_temp = img_cv[bound1[1]:bound1[3], bound1[0]:bound1[2]]
+                                # print(bound1)
+                                # run classification
+                    output.write('profile:\n')
+                    output.write('right:{},{} fp:{}, fn:{}\n'.format(right_pro[0], right_pro[1],
+                                                                     fp_pro, fn_pro))
+                    for threshold in right_fro:
                         output.write('threshold:{}\n'.format(threshold))
-                        output.write('right:{},{} falsePositive:{} falseNegative:{}\n'.format(right[threshold][0], 
-                            right[threshold][1], FP[threshold], FN[threshold]))
-                        output.write('match precision :{}\n'.format(precision))
-                        output.write('leader match recall:{}\n'.format(recall))
-                        output.write('true profile:{} false profile:{} profile precision:{}\n'.format(true_profile[threshold], false_profile[threshold], 
-                            profile_precision))
-                        output.write('true frontal:{} false frontal:{} frontal precision:{}\n'.format(true_frontal[threshold], false_frontal[threshold], 
-                            frontal_precision))
-        
-                output.write('countData:{} leaders,{} others \n Sum:{} countDet:{} no_label:{}\n'.format( countData[0],countData[1], num, countDet, no_label )) 
+                        output.write('frontal:\n')
+                        output.write(
+                            'right:{},{} fp:{}, fn:{}\n'.format(right_fro[threshold][0], right_fro[threshold][1],
+                                                                fp_fro[threshold], fn_fro[threshold]))
+
+                ## countData: groundtruth sum
+                ## sum : all detection result  == countDet + no_label
+
+                output.write('countData:{} leaders,{} others \n Sum:{} countDet:{} no_label:{}\n'.format( countData[0],countData[1], num, countDet, no_label ))
                 output.write('detection recall:{}\n'.format(countDet/float(countData[0]+countData[1])))
-                for threshold in range(60, 150, 5):
-                    threshold = threshold * 0.01
+                output.write('profile:\n')
+                output.write('right:{},{} fp:{}, fn:{}\n'.format(right_pro[0], right_pro[1],
+                                                                 fp_pro, fn_pro))
+
+                for threshold in score:
                     if countDet != 0:
-                        precision = float(right[threshold][0]+right[threshold][1]) / (countDet)
+                        precision = float(right_fro[threshold][0]+right_fro[threshold][1] + right_pro[0] +right_pro[1]) / (countDet)
                     else:
                         precision = 0
-                    recall = float(right[threshold][0]) / countData[0]
-                    if true_profile[threshold] + false_profile[threshold] == 0:
-                        profile_precision = 0
-                    else:
-                        profile_precision = true_profile[threshold] / (true_profile[threshold] + false_profile[threshold])
-                    if true_frontal[threshold] + false_frontal[threshold] == 0:
-                        frontal_precision = 0
-                    else:
-                        frontal_precision = true_frontal[threshold] / (true_frontal[threshold] + false_frontal[threshold])
+                    right = [right_fro[threshold][0]+ right_pro[0], right_fro[threshold][1]+right_pro[1]]
+                    falsepositive = fp_fro[threshold]+fp_pro
+                    falsenegative = fn_fro[threshold]+fn_pro
+                    precision = float(right)/(right+ falsepositive)
+                    recall = float(right) / (right + falsenegative)
+
                     output.write('threshold:{}\n'.format(threshold))
-                    output.write('right:{},{} falsePositive:{} falseNegative:{}\n'.format(right[threshold][0], 
-                        right[threshold][1], FP[threshold], FN[threshold]))
-                    output.write('match precision :{}\n'.format(precision))
-                    output.write('leader match recall:{}\n'.format(recall))
-                    output.write('true profile:{} false profile:{} profile precision:{}\n'.format(true_profile[threshold], false_profile[threshold], 
-                        profile_precision))
-                    output.write('true frontal:{} false frontal:{} frontal precision:{}\n'.format(true_frontal[threshold], false_frontal[threshold], 
-                        frontal_precision))
+                    output.write('right:{},{} falsePositive:{} falseNegative:{}\n'.format(right[0],
+                        right[1], falsepositive, falsenegative))
+                    output.write('precision :{}\n'.format(precision))
+                    output.write('recall:{}\n'.format(recall))
+                    output.write('frontal:\n')
+                    output.write('right:{},{} fp:{}, fn:{}\n'.format(right_fro[threshold][0],right_fro[threshold][1], fp_fro[threshold], fn_fro[threshold]))
 

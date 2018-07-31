@@ -1,21 +1,15 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-import os,json,math,time,glob,cv2
+import os, glob, cv2
 import numpy as np
 import tensorflow as tf
 from nets import nets_factory
-from skimage import io
 import utils2 as utils
-import face_embedding, argparse, shutil
+import face_embedding, argparse
 import _init_paths
 from fast_rcnn.config import cfg as detect_cfg
 from fast_rcnn.test import im_detect
 from fast_rcnn.nms_wrapper import nms
 import caffe
-import matplotlib.pyplot as plt
 import face_align
-import gc
 
 slim = tf.contrib.slim
 
@@ -59,20 +53,12 @@ class Config:
         # bases = glob.glob('raw2/' + leader + '-base/*.jpg')
         for n, path in enumerate(bases):
             label = os.path.basename(path)[:-4] + ';0;'
-
-            # print(label)
-
-            # if label[7:9] =='61':
-            #     img = cv2.imread(path)
-            #     img = img[:, int(img.shape[1]/2):img.shape[1]]
-            #     boxes,points = model.detect(img)
-            #     f = model.get_feature(img, boxes[0], points[0])
-            #     img = img[int(boxes[0][1]):int(boxes[0][3]), int(boxes[0][0]):int(boxes[0][2])]
-            #     cv2.imwrite('DXP_00061_2.jpg', img)
-            #     if f is None: print('DXP_00061.jpg is None')
-            #     feature.append(f)
-            #     continue
-
+            file = open('txts_new/' + leader + '/'+ label.split(';')[0] + '.txt')
+            for line in file:
+                if line.split(' ')[-2] == leader:
+                    print(line)
+                    break
+            continue
             img = cv2.imread(path)
             # print(img.shape)
             bbs, bbs_other = utils.get_bbox('txts/' + leader + '/', label, default_leader=leader)

@@ -40,11 +40,15 @@ def get_bbox(bbs_path, label, default_leader):
 def get_bbox_new(bbs_path, name):
     bbs = list()
     bbs_other= list()
+    if '.' in name:
+        name = name[:-4]
     txt_path = bbs_path + name + '.txt'
     if not os.path.exists(txt_path):
         return None
     for line in open(txt_path):
         info = line.split(' ')
+        if info[6][-1]=='\n':
+            info[6] = info[6][:-1]
         if len(info) != 7:
             print('error line in {}: {}'.format(txt_path, info))
             continue
