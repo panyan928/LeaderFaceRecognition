@@ -44,6 +44,7 @@ def get_bbox_new(bbs_path, name):
         name = name[:-4]
     txt_path = bbs_path + name + '.txt'
     if not os.path.exists(txt_path):
+        print(txt_path + 'doesn\'t exist')
         return None
     for line in open(txt_path):
         info = line.split(' ')

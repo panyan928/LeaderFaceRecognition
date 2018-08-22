@@ -1,0 +1,214 @@
+total leaders: 5
+XJP
+countData:3128 leaders,18546 others 
+ Sum:14402 countDet:13772 no_label:630
+detection recall:0.635415705454
+profile: 2229
+right:0,0 fp:1449, fn:780
+frontal: 6271
+threshold:0.8
+right:1481,4296 fp:3, fn:491
+pre: 0.997978436658  recall:0.751014198783 
+threshold:0.85
+right:1522,4295 fp:4, fn:450
+pre: 0.997378768021  recall:0.771805273834 
+threshold:0.9
+right:1559,4295 fp:4, fn:413
+pre: 0.997440818938  recall:0.790567951318 
+threshold:0.95
+right:1599,4295 fp:4, fn:373
+pre: 0.997504678727  recall:0.810851926978 
+threshold:1.0
+right:1628,4295 fp:4, fn:344
+pre: 0.997549019608  recall:0.825557809331 
+threshold:1.05
+right:1658,4295 fp:4, fn:314
+pre: 0.997593261131  recall:0.840770791075 
+threshold:1.1
+right:1694,4293 fp:6, fn:278
+pre: 0.996470588235  recall:0.859026369168 
+threshold:1.15
+right:1713,4290 fp:9, fn:259
+pre: 0.994773519164  recall:0.868661257606 
+threshold:1.2
+right:1743,4272 fp:27, fn:229
+pre: 0.984745762712  recall:0.883874239351 
+threshold:1.25
+right:1762,4235 fp:64, fn:210
+pre: 0.964950711939  recall:0.893509127789 
+threshold:1.3
+right:1774,4164 fp:135, fn:198
+pre: 0.929282346778  recall:0.899594320487 
+threshold:1.35
+right:1788,3966 fp:333, fn:184
+pre: 0.842998585573  recall:0.906693711968 
+threshold:1.4
+right:1802,3705 fp:594, fn:170
+pre: 0.752086811352  recall:0.913793103448 
+threshold:1.45
+right:1814,3276 fp:1023, fn:158
+pre: 0.639407825167  recall:0.919878296146 
+threshold:1.5
+right:1818,2701 fp:1598, fn:154
+pre: 0.532201405152  recall:0.921906693712 
+threshold:1.55
+right:1819,1993 fp:2306, fn:153
+pre: 0.44096969697  recall:0.922413793103 
+fuzzy_profile: 2926
+right:1,0 fp:2839, fn:86
+fuzzy_frontal: 2346
+threshold:0.8
+right:10,2170 fp:81, fn:85
+pre: 0.10989010989 recall: 0.105263157895
+threshold:0.85
+right:13,2168 fp:83, fn:82
+pre: 0.135416666667 recall: 0.136842105263
+threshold:0.9
+right:13,2165 fp:86, fn:82
+pre: 0.131313131313 recall: 0.136842105263
+threshold:0.95
+right:14,2159 fp:92, fn:81
+pre: 0.132075471698 recall: 0.147368421053
+threshold:1.0
+right:14,2158 fp:93, fn:81
+pre: 0.130841121495 recall: 0.147368421053
+threshold:1.05
+right:14,2154 fp:97, fn:81
+pre: 0.126126126126 recall: 0.147368421053
+threshold:1.1
+right:14,2152 fp:99, fn:81
+pre: 0.12389380531 recall: 0.147368421053
+threshold:1.15
+right:14,2150 fp:101, fn:81
+pre: 0.121739130435 recall: 0.147368421053
+threshold:1.2
+right:15,2146 fp:105, fn:80
+pre: 0.125 recall: 0.157894736842
+threshold:1.25
+right:15,2139 fp:112, fn:80
+pre: 0.11811023622 recall: 0.157894736842
+threshold:1.3
+right:19,2118 fp:133, fn:76
+pre: 0.125 recall: 0.2
+threshold:1.35
+right:21,2086 fp:165, fn:74
+pre: 0.112903225806 recall: 0.221052631579
+threshold:1.4
+right:23,2026 fp:225, fn:72
+pre: 0.0927419354839 recall: 0.242105263158
+threshold:1.45
+right:26,1921 fp:330, fn:69
+pre: 0.0730337078652 recall: 0.273684210526
+threshold:1.5
+right:31,1726 fp:525, fn:64
+pre: 0.0557553956835 recall: 0.326315789474
+threshold:1.55
+right:36,1487 fp:764, fn:59
+pre: 0.045 recall: 0.378947368421
+DXP
+countData:2608 leaders,10211 others 
+ Sum:11018 countDet:10028 no_label:990
+detection recall:0.782276308604
+profile: 1423
+right:18,0 fp:910, fn:495
+frontal: 4491
+threshold:0.8
+right:974,2808 fp:1, fn:708
+pre: 0.998974358974  recall:0.579072532699 
+threshold:0.85
+right:1072,2807 fp:2, fn:610
+pre: 0.998137802607  recall:0.637336504162 
+threshold:0.9
+right:1193,2807 fp:2, fn:489
+pre: 0.998326359833  recall:0.709274673008 
+threshold:0.95
+right:1275,2807 fp:2, fn:407
+pre: 0.998433829287  recall:0.758026159334 
+threshold:1.0
+right:1343,2807 fp:2, fn:339
+pre: 0.998513011152  recall:0.798454221165 
+threshold:1.05
+right:1399,2803 fp:6, fn:283
+pre: 0.995729537367  recall:0.831747919144 
+threshold:1.1
+right:1450,2798 fp:11, fn:232
+pre: 0.992470910335  recall:0.862068965517 
+threshold:1.15
+right:1493,2780 fp:29, fn:189
+pre: 0.980946123522  recall:0.887633769322 
+threshold:1.2
+right:1535,2752 fp:57, fn:147
+pre: 0.964195979899  recall:0.912604042806 
+threshold:1.25
+right:1562,2704 fp:105, fn:120
+pre: 0.937012597481  recall:0.928656361474 
+threshold:1.3
+right:1594,2595 fp:214, fn:88
+pre: 0.881637168142  recall:0.947681331748 
+threshold:1.35
+right:1611,2465 fp:344, fn:71
+pre: 0.824040920716  recall:0.957788347206 
+threshold:1.4
+right:1627,2186 fp:623, fn:55
+pre: 0.723111111111  recall:0.967300832342 
+threshold:1.45
+right:1642,1802 fp:1007, fn:40
+pre: 0.619856549641  recall:0.976218787158 
+threshold:1.5
+right:1653,1370 fp:1439, fn:29
+pre: 0.534605433376  recall:0.98275862069 
+threshold:1.55
+right:1658,959 fp:1850, fn:24
+pre: 0.472633979475  recall:0.985731272295 
+fuzzy_profile: 1752
+right:9,0 fp:1584, fn:159
+fuzzy_frontal: 2362
+threshold:0.8
+right:8,2214 fp:2, fn:138
+pre: 0.8 recall: 0.0547945205479
+threshold:0.85
+right:8,2214 fp:2, fn:138
+pre: 0.8 recall: 0.0547945205479
+threshold:0.9
+right:8,2214 fp:2, fn:138
+pre: 0.8 recall: 0.0547945205479
+threshold:0.95
+right:10,2214 fp:2, fn:136
+pre: 0.833333333333 recall: 0.0684931506849
+threshold:1.0
+right:12,2212 fp:4, fn:134
+pre: 0.75 recall: 0.0821917808219
+threshold:1.05
+right:12,2211 fp:5, fn:134
+pre: 0.705882352941 recall: 0.0821917808219
+threshold:1.1
+right:14,2211 fp:5, fn:132
+pre: 0.736842105263 recall: 0.0958904109589
+threshold:1.15
+right:14,2207 fp:9, fn:132
+pre: 0.608695652174 recall: 0.0958904109589
+threshold:1.2
+right:14,2192 fp:24, fn:132
+pre: 0.368421052632 recall: 0.0958904109589
+threshold:1.25
+right:15,2174 fp:42, fn:131
+pre: 0.263157894737 recall: 0.102739726027
+threshold:1.3
+right:15,2150 fp:66, fn:131
+pre: 0.185185185185 recall: 0.102739726027
+threshold:1.35
+right:17,2091 fp:125, fn:129
+pre: 0.119718309859 recall: 0.116438356164
+threshold:1.4
+right:19,1998 fp:218, fn:127
+pre: 0.0801687763713 recall: 0.130136986301
+threshold:1.45
+right:20,1850 fp:366, fn:126
+pre: 0.0518134715026 recall: 0.13698630137
+threshold:1.5
+right:21,1581 fp:635, fn:125
+pre: 0.032012195122 recall: 0.143835616438
+threshold:1.55
+right:25,1302 fp:914, fn:121
+pre: 0.0266240681576 recall: 0.171232876712
+JZM

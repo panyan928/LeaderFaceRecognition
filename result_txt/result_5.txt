@@ -1,0 +1,14 @@
+total leaders: 5
+XJP
+countData:446 leaders,2527 others 
+ Sum:1981 countDet:294 no_label:0
+detection recall:0.0988900100908
+profile: 294
+right:11,0 fp:185, fn:98
+DXP
+countData:344 leaders,1446 others 
+ Sum:1594 countDet:241 no_label:0
+detection recall:0.134636871508
+profile: 241
+right:0,0 fp:155, fn:86
+JZM

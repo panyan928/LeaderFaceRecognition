@@ -27,4 +27,7 @@ this_dir = osp.dirname(__file__)
 lib_path = osp.join(this_dir, 'py-R-FCN','lib')
 add_path(lib_path)
 
+caffe_path = osp.join('/home/disk3/py/caffe/python')
+add_path(caffe_path)
+
 print(sys.path)

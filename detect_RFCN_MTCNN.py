@@ -44,9 +44,9 @@ def mtcnn_feature(im, imname, class_name, dets, thresh=0.5):
     """Draw detected bounding boxes."""
     inds = np.where(dets[:, -1] >= thresh)[0]
     if len(inds) == 0:
-    	print('0')
-    	return
-    print len(inds)
+        print('0')
+        return
+    print(len(inds))
     height, width , _ = im.shape
     for i in inds:
         bbox = dets[i, :4]
@@ -108,8 +108,9 @@ def demo(net, image_name):
            '{:d} object proposals').format(timer.total_time, boxes.shape[0])
 
     # Visualize detections for each class
-    CONF_THRESH = 0.8
-    NMS_THRESH = 0.3
+    CONF_THRESH = 0.9
+    NMS_THRESH = 0.5
+    bbox = []
     for cls_ind, cls in enumerate(CLASSES[1:]):
         cls_ind += 1 # because we skipped background
         cls_boxes = boxes[:, 4*cls_ind:4*(cls_ind + 1)]
@@ -118,7 +119,10 @@ def demo(net, image_name):
                           cls_scores[:, np.newaxis])).astype(np.float32)
         keep = nms(dets, NMS_THRESH)
         dets = dets[keep, :]
-        mtcnn_feature(im, image_name, cls, dets, thresh=CONF_THRESH)
+        inds = np.where(dets[:, -1] >= CONF_THRESH)[0]
+        for i in inds:
+            print(dets[i,0], dets[i,1], dets[i,2]-dets[i,0], dets[i,3]-dets[i, 1])
+        # mtcnn_feature(im, image_name, cls, dets, thresh=CONF_THRESH)
 
 if __name__ == '__main__':
       # Use RPN for proposals
@@ -139,7 +143,7 @@ if __name__ == '__main__':
     cfg.TEST.HAS_RPN = True
     net = caffe.Net(prototxt, caffemodel, caffe.TEST)
 
-    print '\n\nLoaded network {:s}'.format(caffemodel)
+    print('\n\nLoaded network {:s}'.format(caffemodel))
 
     # Warmup on a dummy image
     im = 128 * np.ones((300, 500, 3), dtype=np.uint8)
@@ -150,10 +154,10 @@ if __name__ == '__main__':
     im_names = glob.glob('raw/DXP-craw/*.jpg')
     #im_names = linecache.getlines(imglist)
     for im_name in im_names:
-        print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
-        print 'Demo for {}'.format(im_name)
-        im_name = 'raw/DXP-craw/DXP_00010.jpg'
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~' )
+        im_name = 'raw/XJP-craw/XJP_02515.jpg'
+        print ('Demo for {}'.format(im_name))
         demo(net, im_name)
-	exit()
+        exit()
         count+=1
     print(count)
